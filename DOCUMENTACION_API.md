@@ -1,25 +1,40 @@
-# DOCUMENTACIÓN DE LA API REST - SHOPSOFT
+# DOCUMENTACIÓN DE API REST - SHOPSOFT
 
 ## 1. Información general
 
 **Proyecto:** ShopSoft - Sistema de gestión para supermercado  
-**Evidencia:** GA7-220501096-AA5-EV03 - Diseño y desarrollo de servicios web  
+**Evidencia:** GA7-220501096-AA5-EV03 - Diseño y desarrollo de servicios web - proyecto  
+**Programa:** Análisis y Desarrollo de Software  
 **Tecnologías:** Node.js, Express, JavaScript, Git, GitHub y Postman.
 
-## 2. Objetivo
+---
 
-Desarrollar una API REST que permita gestionar los productos de un supermercado mediante servicios web. La API permite consultar, registrar, actualizar y eliminar productos utilizando solicitudes HTTP y datos en formato JSON.
+## 2. Introducción
 
-## 3. Descripción de la API
+ShopSoft es un sistema orientado a la gestión de las operaciones principales de un supermercado. De acuerdo con las historias de usuario definidas para el proyecto, el sistema contempla la gestión de productos, control de inventario, alertas de productos próximos a vencer, registro de ventas, generación de reportes y gestión de usuarios.
 
-La API fue desarrollada utilizando Node.js y el framework Express.
+Para proporcionar estas funcionalidades se desarrolló una API REST utilizando Node.js y Express.
 
-Durante el desarrollo se implementaron servicios REST para realizar operaciones CRUD sobre los productos:
+---
 
-- **Create:** crear productos.
-- **Read:** consultar productos.
-- **Update:** actualizar productos.
-- **Delete:** eliminar productos.
+## 3. Objetivo
+
+Diseñar y desarrollar servicios web para el proyecto ShopSoft que permitan disponer de métodos reutilizables para gestionar las principales funcionalidades del sistema mediante solicitudes HTTP y datos en formato JSON.
+
+---
+
+## 4. Tecnologías utilizadas
+
+- Node.js
+- Express
+- JavaScript
+- Git
+- GitHub
+- Postman
+
+---
+
+# 5. Servicios de la API
 
 La API se ejecuta localmente mediante:
 
@@ -27,129 +42,83 @@ La API se ejecuta localmente mediante:
 http://localhost:3000
 ```
 
-## 4. Estructura de los datos
-
-Cada producto contiene los siguientes atributos:
-
-| Campo | Tipo | Descripción |
-|---|---|---|
-| id | Number | Identificador único del producto |
-| nombre | String | Nombre del producto |
-| precio | Number | Precio del producto |
-| stock | Number | Cantidad disponible |
-
-Ejemplo:
-
-```json
-{
-    "id": 1,
-    "nombre": "Arroz",
-    "precio": 4500,
-    "stock": 20
-}
-```
+Los servicios implementados se organizan de acuerdo con las funcionalidades principales del proyecto.
 
 ---
 
-# 5. Servicios implementados
+# 6. Gestión de productos
 
-## 5.1 GET /productos
+## 6.1 Consultar todos los productos
 
-### Descripción
+**Método:** GET
 
-Obtiene la lista de todos los productos registrados en el sistema.
-
-### Método HTTP
+**Endpoint:**
 
 ```text
-GET
+GET http://localhost:3000/productos
 ```
 
-### URL
+**Descripción:**
 
-```text
-http://localhost:3000/productos
-```
+Permite consultar todos los productos registrados en el sistema.
 
-### Solicitud
-
-No requiere cuerpo ni parámetros.
-
-### Respuesta exitosa
-
-**Código HTTP:** `200 OK`
-
-Ejemplo:
+**Respuesta:**
 
 ```json
 [
     {
         "id": 1,
         "nombre": "Arroz",
+        "lote": "L001",
+        "fechaVencimiento": "2026-09-10",
+        "categoria": "Granos",
         "precio": 4500,
         "stock": 20
-    },
-    {
-        "id": 2,
-        "nombre": "Leche",
-        "precio": 3800,
-        "stock": 15
-    },
-    {
-        "id": 3,
-        "nombre": "Galletas",
-        "precio": 2500,
-        "stock": 30
     }
 ]
 ```
 
+**Código de respuesta:** `200 OK`
+
 ---
 
-## 5.2 GET /productos/:id
+## 6.2 Consultar producto por identificador
 
-### Descripción
+**Método:** GET
+
+**Endpoint:**
+
+```text
+GET http://localhost:3000/productos/:id
+```
+
+**Ejemplo:**
+
+```text
+GET http://localhost:3000/productos/1
+```
+
+**Descripción:**
 
 Permite consultar un producto específico utilizando su identificador.
 
-### Método HTTP
-
-```text
-GET
-```
-
-### URL
-
-```text
-http://localhost:3000/productos/1
-```
-
-### Parámetro
-
-| Parámetro | Tipo | Descripción |
-|---|---|---|
-| id | Number | Identificador del producto |
-
-### Respuesta exitosa
-
-**Código HTTP:** `200 OK`
-
-Ejemplo:
+**Respuesta exitosa:**
 
 ```json
 {
     "id": 1,
     "nombre": "Arroz",
+    "lote": "L001",
+    "fechaVencimiento": "2026-09-10",
+    "categoria": "Granos",
     "precio": 4500,
     "stock": 20
 }
 ```
 
-### Producto no encontrado
+**Código:** `200 OK`
 
-**Código HTTP:** `404 Not Found`
-
-Ejemplo:
+Si el producto no existe:
 
 ```json
 {
@@ -157,117 +126,94 @@ Ejemplo:
 }
 ```
 
+**Código:** `404 Not Found`
+
 ---
 
-## 5.3 POST /productos
+## 6.3 Registrar producto
 
-### Descripción
+**Método:** POST
 
-Permite registrar un nuevo producto en el sistema.
-
-### Método HTTP
+**Endpoint:**
 
 ```text
-POST
+POST http://localhost:3000/productos
 ```
 
-### URL
+**Descripción:**
 
-```text
-http://localhost:3000/productos
-```
+Permite registrar un nuevo producto en el inventario.
 
-### Tipo de contenido
-
-```text
-Content-Type: application/json
-```
-
-### Cuerpo de la solicitud
+**Cuerpo de la solicitud:**
 
 ```json
 {
     "nombre": "Café",
+    "lote": "L004",
+    "fechaVencimiento": "2026-12-15",
+    "categoria": "Bebidas",
     "precio": 8000,
     "stock": 10
 }
 ```
 
-### Respuesta exitosa
-
-**Código HTTP:** `201 Created`
-
-Ejemplo:
+**Respuesta exitosa:**
 
 ```json
 {
-    "id": 4,
-    "nombre": "Café",
-    "precio": 8000,
-    "stock": 10
+    "mensaje": "Producto registrado",
+    "producto": {
+        "id": 4,
+        "nombre": "Café",
+        "lote": "L004",
+        "fechaVencimiento": "2026-12-15",
+        "categoria": "Bebidas",
+        "precio": 8000,
+        "stock": 10
+    }
 }
 ```
 
+**Código:** `201 Created`
+
 ---
 
-## 5.4 PUT /productos/:id
+## 6.4 Actualizar producto
 
-### Descripción
+**Método:** PUT
+
+**Endpoint:**
+
+```text
+PUT http://localhost:3000/productos/:id
+```
+
+**Ejemplo:**
+
+```text
+PUT http://localhost:3000/productos/1
+```
+
+**Cuerpo de la solicitud:**
+
+```json
+{
+    "nombre": "Arroz Premium",
+    "lote": "L001",
+    "fechaVencimiento": "2026-09-15",
+    "categoria": "Granos",
+    "precio": 5000,
+    "stock": 25
+}
+```
+
+**Descripción:**
 
 Permite actualizar la información de un producto existente.
 
-### Método HTTP
+**Código:** `200 OK`
 
-```text
-PUT
-```
-
-### URL
-
-```text
-http://localhost:3000/productos/1
-```
-
-### Parámetro
-
-| Parámetro | Tipo | Descripción |
-|---|---|---|
-| id | Number | Identificador del producto que se desea actualizar |
-
-### Tipo de contenido
-
-```text
-Content-Type: application/json
-```
-
-### Cuerpo de la solicitud
-
-```json
-{
-    "nombre": "Arroz Premium",
-    "precio": 5000,
-    "stock": 25
-}
-```
-
-### Respuesta exitosa
-
-**Código HTTP:** `200 OK`
-
-Ejemplo:
-
-```json
-{
-    "id": 1,
-    "nombre": "Arroz Premium",
-    "precio": 5000,
-    "stock": 25
-}
-```
-
-### Producto no encontrado
-
-**Código HTTP:** `404 Not Found`
+Si el producto no existe:
 
 ```json
 {
@@ -275,134 +221,391 @@ Ejemplo:
 }
 ```
 
+**Código:** `404 Not Found`
+
 ---
 
-## 5.5 DELETE /productos/:id
+## 6.5 Eliminar producto
 
-### Descripción
+**Método:** DELETE
 
-Permite eliminar un producto existente mediante su identificador.
-
-### Método HTTP
+**Endpoint:**
 
 ```text
-DELETE
+DELETE http://localhost:3000/productos/:id
 ```
 
-### URL
+**Ejemplo:**
 
 ```text
-http://localhost:3000/productos/1
+DELETE http://localhost:3000/productos/1
 ```
 
-### Parámetro
+**Descripción:**
 
-| Parámetro | Tipo | Descripción |
-|---|---|---|
-| id | Number | Identificador del producto que se desea eliminar |
+Permite eliminar un producto existente del sistema.
 
-### Respuesta exitosa
-
-**Código HTTP:** `200 OK`
-
-Ejemplo:
+**Respuesta:**
 
 ```json
 {
     "mensaje": "Producto eliminado correctamente",
     "producto": {
         "id": 1,
-        "nombre": "Arroz",
-        "precio": 4500,
-        "stock": 20
+        "nombre": "Arroz"
     }
 }
 ```
 
-### Producto no encontrado
+**Código:** `200 OK`
 
-**Código HTTP:** `404 Not Found`
+---
+
+# 7. Alertas de productos próximos a vencer
+
+## 7.1 Consultar productos próximos a vencer
+
+**Método:** GET
+
+**Endpoint:**
+
+```text
+GET http://localhost:3000/alertas/vencimiento
+```
+
+**Descripción:**
+
+Consulta los productos que se encuentran próximos a su fecha de vencimiento.
+
+El servicio considera productos con stock disponible y cuya fecha de vencimiento se encuentre dentro de los próximos siete días.
+
+**Respuesta:**
 
 ```json
 {
-    "mensaje": "Producto no encontrado"
+    "mensaje": "Productos próximos a vencer",
+    "cantidad": 1,
+    "productos": [
+        {
+            "id": 2,
+            "nombre": "Leche",
+            "lote": "L002",
+            "fechaVencimiento": "2026-09-06",
+            "categoria": "Lácteos",
+            "precio": 3800,
+            "stock": 15
+        }
+    ]
 }
 ```
 
----
-
-# 6. Resumen de servicios
-
-| Método | Endpoint | Función | Respuesta |
-|---|---|---|---|
-| GET | `/productos` | Consultar todos los productos | 200 |
-| GET | `/productos/:id` | Consultar un producto | 200 / 404 |
-| POST | `/productos` | Crear un producto | 201 |
-| PUT | `/productos/:id` | Actualizar un producto | 200 / 404 |
-| DELETE | `/productos/:id` | Eliminar un producto | 200 / 404 |
+**Código:** `200 OK`
 
 ---
 
-# 7. Pruebas de funcionamiento
+# 8. Ventas e inventario
 
-Los servicios fueron probados utilizando Postman.
+## 8.1 Registrar una venta
 
-Se realizaron pruebas de:
+**Método:** POST
 
-- Consulta de todos los productos mediante GET.
-- Consulta de un producto mediante GET con identificador.
-- Registro de un producto mediante POST.
-- Actualización de un producto mediante PUT.
-- Eliminación de un producto mediante DELETE.
-
-Las solicitudes fueron ejecutadas sobre el servidor local:
+**Endpoint:**
 
 ```text
-http://localhost:3000
+POST http://localhost:3000/ventas
 ```
 
-Las pruebas permitieron verificar que los servicios respondieran correctamente mediante códigos de estado HTTP y datos en formato JSON.
+**Descripción:**
+
+Permite registrar la venta de un producto y actualizar automáticamente el stock disponible.
+
+**Cuerpo de la solicitud:**
+
+```json
+{
+    "productoId": 2,
+    "cantidad": 3
+}
+```
+
+**Funcionamiento:**
+
+1. Se verifica que el producto exista.
+2. Se verifica que la cantidad sea válida.
+3. Se verifica que exista stock suficiente.
+4. Se descuenta la cantidad vendida del inventario.
+5. Se registra la venta.
+6. Se calcula el valor total.
+
+**Respuesta exitosa:**
+
+```json
+{
+    "mensaje": "Venta realizada",
+    "venta": {
+        "id": 1,
+        "productoId": 2,
+        "producto": "Leche",
+        "cantidad": 3,
+        "precioUnitario": 3800,
+        "total": 11400
+    },
+    "stockActual": 12
+}
+```
+
+**Código:** `201 Created`
+
+Si no existe suficiente inventario:
+
+```json
+{
+    "mensaje": "Stock insuficiente"
+}
+```
+
+**Código:** `400 Bad Request`
 
 ---
 
-# 8. Control de versiones
+## 8.2 Consultar ventas
 
-Para el control de versiones del proyecto se utilizó Git.
+**Método:** GET
 
-El código fuente fue almacenado en un repositorio público de GitHub:
+**Endpoint:**
 
-**Repositorio:** API-Supermercado
+```text
+GET http://localhost:3000/ventas
+```
 
-El proyecto cuenta con un historial de commits que permite realizar seguimiento a los cambios efectuados durante el desarrollo.
+**Descripción:**
+
+Permite consultar las ventas registradas en el sistema.
+
+**Código:** `200 OK`
 
 ---
 
-# 9. Ejecución del proyecto
+# 9. Reportes
 
-Para ejecutar el proyecto se deben instalar las dependencias mediante:
+## 9.1 Reporte de inventario
+
+**Método:** GET
+
+**Endpoint:**
+
+```text
+GET http://localhost:3000/reportes/inventario
+```
+
+**Descripción:**
+
+Permite consultar información del inventario.
+
+También permite filtrar los productos mediante la categoría.
+
+**Ejemplo:**
+
+```text
+GET http://localhost:3000/reportes/inventario?categoria=Granos
+```
+
+**Respuesta:**
+
+```json
+{
+    "tipo": "Reporte de inventario",
+    "totalProductos": 1,
+    "productos": [
+        {
+            "id": 1,
+            "nombre": "Arroz",
+            "categoria": "Granos",
+            "precio": 4500,
+            "stock": 20
+        }
+    ]
+}
+```
+
+**Código:** `200 OK`
+
+---
+
+## 9.2 Reporte de ventas
+
+**Método:** GET
+
+**Endpoint:**
+
+```text
+GET http://localhost:3000/reportes/ventas
+```
+
+**Descripción:**
+
+Genera información resumida de las ventas registradas y calcula el valor total vendido.
+
+**Respuesta:**
+
+```json
+{
+    "tipo": "Reporte de ventas",
+    "cantidadVentas": 1,
+    "totalVendido": 11400,
+    "ventas": []
+}
+```
+
+**Código:** `200 OK`
+
+---
+
+# 10. Gestión de usuarios
+
+## 10.1 Consultar usuarios
+
+**Método:** GET
+
+**Endpoint:**
+
+```text
+GET http://localhost:3000/usuarios
+```
+
+**Descripción:**
+
+Permite consultar los usuarios registrados en el sistema.
+
+**Código:** `200 OK`
+
+---
+
+## 10.2 Crear usuario
+
+**Método:** POST
+
+**Endpoint:**
+
+```text
+POST http://localhost:3000/usuarios
+```
+
+**Descripción:**
+
+Permite crear usuarios para el sistema y asignarles un rol.
+
+Los roles disponibles son:
+
+- Empleado
+- Gerente
+
+**Cuerpo de la solicitud:**
+
+```json
+{
+    "nombre": "Juan Pérez",
+    "correo": "juan@shopsoft.com",
+    "contraseña": "123456",
+    "rol": "Empleado"
+}
+```
+
+**Respuesta exitosa:**
+
+```json
+{
+    "mensaje": "Usuario creado",
+    "usuario": {
+        "id": 2,
+        "nombre": "Juan Pérez",
+        "correo": "juan@shopsoft.com",
+        "rol": "Empleado"
+    }
+}
+```
+
+**Código:** `201 Created`
+
+Si el correo ya está registrado:
+
+```json
+{
+    "mensaje": "Correo ya registrado"
+}
+```
+
+**Código:** `400 Bad Request`
+
+---
+
+# 11. Resumen de endpoints
+
+| Método | Endpoint | Funcionalidad |
+|---|---|---|
+| GET | `/productos` | Consultar productos |
+| GET | `/productos/:id` | Consultar producto |
+| POST | `/productos` | Registrar producto |
+| PUT | `/productos/:id` | Actualizar producto |
+| DELETE | `/productos/:id` | Eliminar producto |
+| GET | `/alertas/vencimiento` | Consultar productos próximos a vencer |
+| POST | `/ventas` | Registrar venta y actualizar inventario |
+| GET | `/ventas` | Consultar ventas |
+| GET | `/reportes/inventario` | Consultar reporte de inventario |
+| GET | `/reportes/ventas` | Consultar reporte de ventas |
+| GET | `/usuarios` | Consultar usuarios |
+| POST | `/usuarios` | Crear usuario |
+
+---
+
+# 12. Control de versiones
+
+El proyecto utiliza Git como herramienta de control de versiones y GitHub como repositorio remoto.
+
+El repositorio utilizado para almacenar el proyecto es:
+
+```text
+https://github.com/sbedoya600-design/API-Supermercado
+```
+
+El código fuente cuenta con diferentes commits que permiten realizar seguimiento a los cambios realizados durante el desarrollo.
+
+---
+
+# 13. Ejecución
+
+Para instalar las dependencias del proyecto:
 
 ```bash
 npm install
 ```
 
-Posteriormente se inicia el servidor mediante:
+Para iniciar el servidor:
 
 ```bash
 node server.js
 ```
 
-Cuando el servidor se inicia correctamente se muestra:
+Al iniciar correctamente se muestra:
 
 ```text
 Servidor ejecutándose en http://localhost:3000
 ```
 
-La API puede ser probada utilizando Postman.
+---
+
+# 14. Consideraciones
+
+La versión desarrollada utiliza estructuras de datos en memoria para representar los productos, usuarios y ventas. Por esta razón, la información se reinicia cuando se detiene el servidor.
+
+La API fue desarrollada como parte del proceso académico del proyecto ShopSoft y permite demostrar la implementación de servicios web REST relacionados con las funcionalidades definidas en las historias de usuario.
 
 ---
 
-# 10. Conclusión
+# 15. Conclusión
 
-Se desarrolló una API REST funcional para el proyecto ShopSoft, implementando servicios web para la gestión de productos de un supermercado.
+Se diseñaron y desarrollaron servicios web REST para el proyecto ShopSoft utilizando Node.js y Express.
 
-La API permite realizar las principales operaciones CRUD mediante los métodos HTTP GET, POST, PUT y DELETE. Además, se realizaron pruebas mediante Postman y se utilizó Git y GitHub para el control y almacenamiento del código fuente.
+Los servicios permiten gestionar productos, consultar alertas de vencimiento, registrar ventas con actualización de inventario, consultar reportes y administrar usuarios.
+
+El proyecto fue gestionado mediante Git y almacenado en un repositorio remoto de GitHub, cumpliendo con el uso de herramientas de versionamiento solicitado para la evidencia GA7-220501096-AA5-EV03.
