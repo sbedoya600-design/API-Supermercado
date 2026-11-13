@@ -1,0 +1,532 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermercado - Sistema de inventario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="menu">
+        <div class="logo">
+            <h2>Supermercado</h2>
+            <p>Sistema de inventario</p>
+        </div>
+
+        <p class="titulo-menu">MENU PRINCIPAL</p>
+
+        <a class="activo" href="#inicio">Inicio</a>
+       <a href="#registrar-producto">Productos</a>
+        <a href="#inventario">Inventario</a>
+        <a href="#ventas">Ventas</a>
+        <a href="#alertas">Alertas</a>
+        <a href="#reportes">Reportes</a>
+
+        <div class="usuario">
+            <strong id="nombreUsuario">Usuario</strong>
+            <p id="rolUsuario">Sesión activa</p>
+            <button id="cerrarSesion" type="button"
+                style="margin-top:10px;padding:9px 12px;border:0;border-radius:7px;background:#ffffff;color:#176b45;font-weight:600;cursor:pointer;">
+                Cerrar sesión
+            </button>
+        </div>
+    </aside>
+
+    <main class="contenido" id="inicio">
+
+        <header class="encabezado">
+            <div>
+                <p class="ruta">Sistema de inventario / Inicio</p>
+                <h1>Panel principal</h1>
+                <p>Bienvenido al sistema de gestión del supermercado.</p>
+            </div>
+
+            <div class="fecha">
+                <strong>Resumen general</strong>
+                <p>Control de productos e inventario</p>
+            </div>
+        </header>
+
+<section class="seccion" id="registrar-producto">
+    <h2>Registrar nuevo producto</h2>
+    <p>Ingresa la información del producto para guardarlo en el inventario.</p>
+
+    <form id="formularioProducto">
+        <div class="campo-formulario">
+            <label for="nombreProducto">Nombre del producto</label>
+            <input type="text" id="nombreProducto" required
+                   placeholder="Ej. Arroz">
+        </div>
+
+        <div class="campo-formulario">
+            <label for="categoriaProducto">Categoría</label>
+            <select id="categoriaProducto" required>
+                <option value="">Selecciona una categoría</option>
+            </select>
+        </div>
+
+        <div class="campo-formulario">
+            <label for="precioProducto">Precio (COP)</label>
+            <input type="number" id="precioProducto" min="1"
+                   step="1" required placeholder="Ej. 4500">
+        </div>
+
+        <div class="campo-formulario">
+            <label for="cantidadProducto">Cantidad</label>
+            <input type="number" id="cantidadProducto" min="0"
+                   step="1" required placeholder="Ej. 20">
+        </div>
+
+        <div class="campo-formulario">
+            <label for="vencimientoProducto">Fecha de vencimiento</label>
+            <input type="date" id="vencimientoProducto">
+        </div>
+
+        <button type="submit">Guardar producto</button>
+        <p id="mensajeProducto" role="status"></p>
+    </form>
+</section>
+
+        <section class="tarjetas">
+            <div class="tarjeta">
+                <p>Productos registrados</p>
+                <h2 id="totalProductos">—</h2>
+                <span>Productos en el sistema</span>
+            </div>
+
+            <div class="tarjeta">
+                <p>Unidades en inventario</p>
+                <h2 id="totalUnidades">—</h2>
+                <span>Existencias registradas</span>
+            </div>
+
+            <div class="tarjeta">
+                <p>Stock bajo</p>
+                <h2 id="stockBajo">—</h2>
+                <span>Requieren revisión</span>
+            </div>
+
+            <div class="tarjeta">
+                <p>Próximos a vencer</p>
+                <h2 id="proximosVencer">—</h2>
+                <span>Revisar fechas</span>
+            </div>
+        </section>
+
+        <section class="seccion" id="productos">
+            <h2>Lista de productos</h2>
+            <p>Productos consultados desde la base de datos.</p>
+
+            <div class="tabla">
+                <table>
+                    <thead>
+                        <tr>
+
+<th>Producto</th>
+<th>Categoría</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Estado</th>
+<th>Acciones</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tablaProductos">
+                        <tr>
+                            <td colspan="6">Cargando productos...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="seccion" id="inventario">
+            <h2>Estado del inventario</h2>
+            <p>Resumen visual de las existencias registradas.</p>
+
+            <div class="barra">
+                <div class="progreso" id="progresoInventario"></div>
+            </div>
+
+            <p id="textoInventario">Calculando inventario...</p>
+        </section>
+
+        <section class="seccion" id="alertas">
+            <h2>Alertas de inventario</h2>
+            <div id="listaAlertas">
+                <p class="alerta">Consultando alertas...</p>
+            </div>
+        </section>
+
+        <section class="seccion" id="ventas">
+            <h2>Ventas</h2>
+            <p>Módulo para consultar y organizar las ventas realizadas.</p>
+            <div class="opcion">
+                <strong>Registro de ventas</strong>
+                <p>La integración con la base de datos está pendiente.</p>
+            </div>
+        </section>
+
+        <section class="seccion" id="reportes">
+            <h2>Reportes</h2>
+            <p>Consulta de información del inventario y los productos.</p>
+            <div class="opcion">
+                <strong>Informes del sistema</strong>
+                <p>Los productos se consultan desde la base de datos.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>Supermercado - Proyecto de gestión de inventario</p>
+            <p>Interfaz HTML y CSS conectada a una API Node.js.</p>
+        </footer>
+
+    </main>
+
+    <script>
+        // Comprobar que exista una sesión iniciada.
+        // Se aceptan ambas claves para mantener compatibilidad con el login que editaste.
+        const token = sessionStorage.getItem('supermercado_token')
+            || sessionStorage.getItem('shopsoft_token');
+
+        if (!token) {
+            window.location.replace('login.html');
+        }
+
+        const API = window.location.protocol === 'file:'
+            ? 'http://localhost:3000'
+            : `http://${window.location.hostname}:3000`;
+
+        // Mostrar el usuario si el login guardó sus datos.
+        try {
+            const usuarioGuardado = JSON.parse(
+                sessionStorage.getItem('supermercado_usuario')
+                || sessionStorage.getItem('shopsoft_usuario')
+                || 'null'
+            );
+            if (usuarioGuardado) {
+                document.getElementById('nombreUsuario').textContent =
+                    usuarioGuardado.nombre || usuarioGuardado.correo || 'Usuario';
+                document.getElementById('rolUsuario').textContent =
+                    usuarioGuardado.rol || 'Sesión activa';
+            }
+        } catch (_) {
+            // Si no hay datos del usuario, se conserva el texto genérico.
+        }
+
+        document.getElementById('cerrarSesion').addEventListener('click', () => {
+            sessionStorage.removeItem('supermercado_token');
+            sessionStorage.removeItem('shopsoft_token');
+            sessionStorage.removeItem('supermercado_usuario');
+            sessionStorage.removeItem('shopsoft_usuario');
+            window.location.replace('login.html');
+        });
+
+        console.log('Conectando con ShopSoft API:', API);
+
+        const formatoPrecio = valor =>
+            Number(valor).toLocaleString('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                maximumFractionDigits: 0
+            });
+
+        async function cargarProductos() {
+            const tabla = document.getElementById('tablaProductos');
+
+            try {
+                const respuesta = await fetch(`${API}/productos`);
+
+                if (!respuesta.ok) {
+                    throw new Error('No se pudieron consultar los productos.');
+                }
+
+                const productos = await respuesta.json();
+
+                tabla.replaceChildren();
+
+                if (productos.length === 0) {
+                    const fila = tabla.insertRow();
+                    const celda = fila.insertCell();
+                    celda.colSpan = 5;
+                    celda.textContent = 'No hay productos registrados.';
+                }
+
+                let unidades = 0;
+                let stockBajo = 0;
+
+                productos.forEach(producto => {
+                    const cantidad = Number(producto.stock ?? producto.cantidad ?? 0);
+                    const precio = Number(producto.precio ?? 0);
+
+                    unidades += cantidad;
+
+                    if (cantidad <= 10) {
+                        stockBajo++;
+                    }
+
+                    const fila = tabla.insertRow();
+                    fila.insertCell().textContent = producto.nombre;
+                    fila.insertCell().textContent = producto.categoria || 'Sin categoría';
+                    fila.insertCell().textContent = `${cantidad} unidades`;
+                    fila.insertCell().textContent = formatoPrecio(precio);
+
+                    const estado = document.createElement('span');
+
+                    if (cantidad <= 0) {
+                        estado.className = 'peligro';
+                        estado.textContent = 'Agotado';
+                    } else if (cantidad <= 10) {
+                        estado.className = 'aviso';
+                        estado.textContent = 'Stock bajo';
+                    } else {
+                        estado.className = 'bien';
+                        estado.textContent = 'Disponible';
+                    }
+
+                    fila.insertCell().appendChild(estado);
+                    
+const acciones = fila.insertCell();
+
+const botonEditar = document.createElement('button');
+botonEditar.textContent = 'Editar';
+botonEditar.type = 'button';
+botonEditar.className = 'boton-editar';
+botonEditar.addEventListener('click', () => editarProducto(producto));
+
+const botonEliminar = document.createElement('button');
+botonEliminar.textContent = 'Eliminar';
+botonEliminar.type = 'button';
+botonEliminar.className = 'boton-eliminar';
+botonEliminar.addEventListener('click', () => eliminarProducto(producto.id));
+
+acciones.append(botonEditar, botonEliminar);
+
+                });
+
+                document.getElementById('totalProductos').textContent = productos.length;
+                document.getElementById('totalUnidades').textContent =
+                    unidades.toLocaleString('es-CO');
+                document.getElementById('stockBajo').textContent = stockBajo;
+
+                const porcentaje = unidades > 0
+                    ? Math.round(productos.filter(p => Number(p.stock ?? p.cantidad ?? 0) > 0).length
+                        / productos.length * 100)
+                    : 0;
+
+                document.getElementById('progresoInventario').style.width =
+                    `${porcentaje}%`;
+
+                document.getElementById('textoInventario').textContent =
+                    `Productos con existencias: ${porcentaje}%`;
+
+                await cargarAlertas();
+            } catch (error) {
+                console.error(error);
+
+                tabla.replaceChildren();
+                const fila = tabla.insertRow();
+                const celda = fila.insertCell();
+                celda.colSpan = 5;
+                celda.textContent =
+                    'No se pudo conectar con la API. Comprueba que el servidor esté encendido.';
+
+                document.getElementById('listaAlertas').textContent =
+                    'No fue posible consultar las alertas.';
+            }
+        }
+
+        async function cargarAlertas() {
+            const contenedor = document.getElementById('listaAlertas');
+
+            try {
+                const respuesta = await fetch(`${API}/alertas/vencimiento`);
+
+                if (!respuesta.ok) {
+                    throw new Error('No se pudieron consultar las alertas.');
+                }
+
+                const datos = await respuesta.json();
+                contenedor.replaceChildren();
+
+                document.getElementById('proximosVencer').textContent =
+                    datos.cantidad ?? 0;
+
+                if (!datos.productos || datos.productos.length === 0) {
+                    const mensaje = document.createElement('p');
+                    mensaje.className = 'alerta';
+                    mensaje.textContent = 'No hay productos próximos a vencer.';
+                    contenedor.appendChild(mensaje);
+                    return;
+                }
+
+                datos.productos.forEach(producto => {
+                    const mensaje = document.createElement('p');
+                    mensaje.className = 'alerta';
+
+                    const fecha = producto.fechaVencimiento
+                        ? new Date(producto.fechaVencimiento).toLocaleDateString('es-CO')
+                        : 'Fecha no disponible';
+
+                    mensaje.textContent =
+                        `${producto.nombre}: vence el ${fecha}.`;
+
+                    contenedor.appendChild(mensaje);
+                });
+            } catch (error) {
+                console.error(error);
+                contenedor.textContent = 'No fue posible cargar las alertas.';
+            }
+        }
+
+async function eliminarProducto(id) {
+    if (!confirm('¿Seguro que deseas eliminar este producto?')) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(`${API}/productos/${id}`, {
+            method: 'DELETE'
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(datos.mensaje || 'No se pudo eliminar el producto');
+        }
+
+        document.getElementById('mensajeProducto').textContent =
+            'Producto eliminado correctamente.';
+
+        await cargarProductos();
+    } catch (error) {
+        console.error(error);
+        document.getElementById('mensajeProducto').textContent = error.message;
+    }
+}
+
+async function editarProducto(producto) {
+    const nombre = prompt('Nombre del producto:', producto.nombre);
+    if (nombre === null) return;
+
+    const precioTexto = prompt('Precio:', producto.precio);
+    if (precioTexto === null) return;
+
+    const cantidadTexto = prompt('Cantidad:', producto.stock);
+    if (cantidadTexto === null) return;
+
+    const precio = Number(precioTexto);
+    const stock = Number(cantidadTexto);
+
+    if (!nombre.trim() || !Number.isFinite(precio) || precio <= 0 ||
+        !Number.isInteger(stock) || stock < 0) {
+        alert('Ingresa un nombre, un precio mayor que cero y una cantidad válida.');
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(`${API}/productos/${producto.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: nombre.trim(),
+                id_categoria: producto.id_categoria,
+                precio,
+                stock,
+                fechaVencimiento: producto.fechaVencimiento || null
+            })
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(datos.mensaje || 'No se pudo actualizar el producto');
+        }
+
+        document.getElementById('mensajeProducto').textContent =
+            'Producto actualizado correctamente.';
+
+        await cargarProductos();
+    } catch (error) {
+        console.error(error);
+        document.getElementById('mensajeProducto').textContent = error.message;
+    }
+}
+
+async function cargarCategorias() {
+    const selector = document.getElementById('categoriaProducto');
+
+    try {
+        const respuesta = await fetch(`${API}/categorias`);
+
+        if (!respuesta.ok) {
+            throw new Error('No se pudieron cargar las categorías');
+        }
+
+        const categorias = await respuesta.json();
+
+        categorias.forEach(categoria => {
+            const opcion = document.createElement('option');
+            opcion.value = categoria.id_categoria;
+            opcion.textContent = categoria.nombre;
+            selector.appendChild(opcion);
+        });
+    } catch (error) {
+        console.error(error);
+        document.getElementById('mensajeProducto').textContent =
+            'No se pudieron cargar las categorías.';
+    }
+}
+
+document.getElementById('formularioProducto').addEventListener('submit', async function(event) {
+    event.preventDefault();
+
+    const mensaje = document.getElementById('mensajeProducto');
+
+    const producto = {
+        nombre: document.getElementById('nombreProducto').value.trim(),
+        id_categoria: Number(document.getElementById('categoriaProducto').value),
+        precio: Number(document.getElementById('precioProducto').value),
+        stock: Number(document.getElementById('cantidadProducto').value),
+        fechaVencimiento: document.getElementById('vencimientoProducto').value || null
+    };
+
+    try {
+        const respuesta = await fetch(`${API}/productos`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(producto)
+        });
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok) {
+            throw new Error(datos.mensaje || 'No se pudo guardar el producto');
+        }
+
+        mensaje.textContent = '¡Producto guardado correctamente!';
+        this.reset();
+        await cargarProductos();
+
+    } catch (error) {
+        console.error(error);
+        mensaje.textContent = error.message;
+    }
+});
+
+cargarCategorias();
+cargarProductos();
+
+// Actualizar el inventario automáticamente cada 10 segundos
+setInterval(() => {
+    cargarProductos();
+}, 10000);
+</script>
+</body>
+</html>
